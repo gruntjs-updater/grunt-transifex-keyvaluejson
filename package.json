@@ -1,0 +1,39 @@
+{
+  "name": "grunt-transifex-keyvaluejson",
+  "version": "0.0.1",
+  "description": "Provides a Grunt task that downloads translation strings from Transifex into your project, maintaining the original JSON format and structures",
+  "repository": "",
+  "author": {
+    "name": "Maurice Williams",
+    "email": ""
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ],
+  "devDependencies": {
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-nodeunit": "~0.3.0",
+    "grunt": "~0.4.2",
+    "jshint-stylish": "~0.1.5",
+    "load-grunt-tasks": "~0.3.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "inquirer": "^0.8.2",
+    "lodash": "^3.8.0",
+    "request": "^2.55.0"
+  }
+}
