@@ -1,6 +1,8 @@
 # grunt-transifex-keyvaluejson
 
-> Provides a Grunt task that downloads translation strings from Transifex into your project, maintaining the original JSON format and structures
+> Grunt task that downloads string translations from Transifex in JSON format, maintaining original (nested) structure using the Transifex [Translation](http://docs.transifex.com/developer/api/translations#uploading-and-downloading-translations) and [Resoureces](http://docs.transifex.com/developer/api/resources#uploading-and-downloading-resources) API  
+
+Inspired by [grunt-transifex](https://github.com/erasys/grunt-transifex)
 
 ## Getting Started
 This plugin requires Grunt.
@@ -26,7 +28,12 @@ In your project's Gruntfile, add a section named `transifex_keyvaluejson` to the
 grunt.initConfig({
   transifex_keyvaluejson: {
     options: {
-      // Task-specific options go here.
+      project: '',
+      resource: '',
+      locales: '*',
+      dest: '/translations',
+      mode: 'default',
+      showStats: true
     },
     your_target: {
       // Target-specific file lists and/or options go here.
@@ -37,56 +44,55 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.project
+Type: `String`  
+Mandatory: yes  
+Default value: `''`
+
+Project slug for the Transifex project you are interested in ([more info](http://docs.transifex.com/developer/introduction/#project))
+
+#### options.resource
 Type: `String`
-Default value: `',  '`
+  Mandatory: yes  
+Default value: `''`
 
-A string value that is used to do something with whatever.
+Resource slug for the resource under the Transifex project ([more info](http://docs.transifex.com/developer/introduction/#resource))
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+#### options.locales
+Type: `Array` or `String` 
+ Mandatory: no  
+Default value: `'*'`
 
-A string value that is used to do something else with whatever else.
+List of locales to download. i.e.: en, en_US, es_PA, de_DE, etc
 
-### Usage Examples
+#### options.dest
+Type: `String`  
+Mandatory: no  
+Default value: `'/translations'`
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+Output directory where the translated strings will be saved.  
+The path will always be taken as relative to the projects root directory.
 
-```js
-grunt.initConfig({
-  transifex_keyvaluejson: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+#### options.mode
+Type: `String`  
+Mandatory: no  
+Default value: `'default'`
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
 
-```js
-grunt.initConfig({
-  transifex_keyvaluejson: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+Directly related to the `mode` parameter in the Transifex API ([more info](http://docs.transifex.com/developer/api/translations#get))  
+It's basically a filter to indicate what translated strings should be downloaded.  
+Available options are:
 
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+* `default`: to include all translated strings in the response.  
+* `reviewed`: to include only reviewed strings in the response  
+* `translator`: to get a response suitable for offline translations.  
+* `onlytranslated`: to get a response that will include the translated strings and the untranslated ones will be returned empty.  
+* `onlyreviewed`: to get a response that will include the only the reviewed strings and the rest (translated or not) will be returned empty.  
 
-## Release History
-_(Nothing yet)_
+## Transifex credentials
+(the code for this has been leveraged from the [grunt-transifex](https://github.com/erasys/grunt-transifex) project)
 
-## License
-Copyright (c) 2015 Maurice Williams. Licensed under the MIT license.
+When the plugin runs for the first time, it will prompt the user for a Transifex username and password.
+It will store this information in a `.transifexrc` file created in the current directory. 
+
+On subsequent executions, the user won't be prompted again. Transifex credentials will be read from `.transifexrc`
