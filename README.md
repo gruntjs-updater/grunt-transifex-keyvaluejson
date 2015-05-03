@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/morficus/grunt-transifex-keyvaluejson.svg)](https://travis-ci.org/morficus/grunt-transifex-keyvaluejson)
 # grunt-transifex-keyvaluejson
 
 > Grunt task that downloads string translations from Transifex in JSON format, maintaining original (nested) structure using the Transifex [Translation](http://docs.transifex.com/developer/api/translations#uploading-and-downloading-translations) and [Resoureces](http://docs.transifex.com/developer/api/resources#uploading-and-downloading-resources) API  
