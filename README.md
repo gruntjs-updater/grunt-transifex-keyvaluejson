@@ -52,21 +52,21 @@ Default value: `''`
 
 Project slug for the Transifex project you are interested in ([more info](http://docs.transifex.com/developer/introduction/#project))
 
-#### options.resource
-Type: `String`
+#### options.resource  
+Type: `String`  
   Mandatory: yes  
 Default value: `''`
 
 Resource slug for the resource under the Transifex project ([more info](http://docs.transifex.com/developer/introduction/#resource))
 
 #### options.locales
-Type: `Array` or `String` 
+Type: `Array` or `String`  
  Mandatory: no  
 Default value: `'*'`
 
 List of locales to download. i.e.: en, en_US, es_PA, de_DE, etc
 
-#### options.dest
+#### options.dest  
 Type: `String`  
 Mandatory: no  
 Default value: `'/translations'`
