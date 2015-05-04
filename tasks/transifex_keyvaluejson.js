@@ -11,7 +11,8 @@
 var TrasifexResourceApi = require('../lib/transifex-api'),
     credentials         = require('../lib/credentials'),
     Promise             = require('bluebird'),
-    path                = require('path');
+    path                = require('path'),
+    fs                  = require('fs');
 
 module.exports = function (grunt) {
 
@@ -49,7 +50,13 @@ module.exports = function (grunt) {
                 try {
                     resourceApi = new TrasifexResourceApi(options);
                     resourceApi.download()
-                        .then(function () {
+                        .then(function (files) {
+
+                            files.forEach(function (file) {
+                                var stats = fs.statSync(file);
+                                grunt.log.writeln('Crated file: ' + file + ' (' + stats['size'] + 'bytes)');
+                            });
+
                             done();
                         })
                         .catch(function (error) {

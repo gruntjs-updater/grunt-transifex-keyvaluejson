@@ -1,8 +1,9 @@
 var expect      = require('chai').expect,
     _           = require('lodash'),
     fs          = require('fs'),
-    rmrf      = require('rimraf');
+    rmrf        = require('rimraf');
     nock        = require('nock'),
+    path        = require('path'),
 
     ResourceApi = require('../../lib/transifex-api'),
 
@@ -218,6 +219,7 @@ describe('Transifex Resource API', function () {
                 .then(function (resopnse) {
                     expect(resopnse).to.be.an('string');
                     expect(JSON.parse(resopnse)).to.be.ok;
+                    expect(JSON.parse(resopnse)).to.be.an('object');
                     done();
                 })
                 .catch(function (error) {
@@ -308,7 +310,7 @@ describe('Transifex Resource API', function () {
                 });
         });
 
-        it('will create a file for each locale in the `options.dist` location', function (done) {
+        it('will create a non-empty file for each locale in the `options.dist` location', function (done) {
             var newOptions = _.defaults({'locales': 'en'}, options);
             var api = new ResourceApi(newOptions);
 
@@ -317,13 +319,40 @@ describe('Transifex Resource API', function () {
                     expect(fs.existsSync(newOptions.dest)).to.be.true;
                     fs.readdir(newOptions.dest, function (error, files) {
                         expect(files.length).to.equal(newOptions.locales.length);
+
+                        var fileStats = fs.statSync(path.join(newOptions.dest, files[0]));
+                        expect(fileStats['size']).to.greaterThan(0);
+
                         done();
                     });
                 })
                 .catch(function (error) {
                     done(error);
                 });
-        })
+        });
+
+        it ('will create files with JSON content', function (done) {
+            var newOptions = _.defaults({'locales': 'en'}, options);
+            var api = new ResourceApi(newOptions);
+
+            api.download()
+                .then(function () {
+                    fs.readdir(newOptions.dest, function (error, files) {
+                        var pathToFile = path.join(newOptions.dest, files[0]);
+                        var fileStats = fs.statSync(pathToFile);
+                        expect(fileStats['size']).to.not.equal(0);
+                        var fileContent = fs.readFileSync(pathToFile, 'utf-8');
+                        expect(JSON.parse(fileContent)).to.be.ok;
+                        expect(JSON.parse(fileContent)).to.be.an('object');
+
+                        done();
+                    });
+                })
+                .catch(function (error) {
+                    done(error);
+                });
+        });
+
     });
 
 
