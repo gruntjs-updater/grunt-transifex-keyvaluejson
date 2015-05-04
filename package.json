@@ -1,6 +1,6 @@
 {
   "name": "grunt-transifex-keyvaluejson",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Grunt task that downloads string translations from Transifex in JSON format, maintaining original (nested) structure.",
   "repository": {
     "type": "git",
