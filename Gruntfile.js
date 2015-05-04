@@ -36,7 +36,7 @@ module.exports = function (grunt) {
             default_options: {
                 options: {
                     project: 'ghost-test-project',
-                    resource: 'ghost-poc'
+                    resource: 'ghost-admin-poc'
                 }
             }
         },
